@@ -19,14 +19,16 @@ public class FileWriterService {
 
         try{
             File file = new File("LOGS/credentials.txt");
-            FileWriter fileWriter = new FileWriter(file);
+            FileWriter fileWriter = new FileWriter(file, true);
 
             fileWriter
+            .append("\n")
                     .append("Username: ")
                             .append(username)
                                     .append("\n")
                                             .append("Password: ")
-                                                    .append(password);
+                                                    .append(password)
+                                                        .append("\n");
 
 
             fileWriter.close();
