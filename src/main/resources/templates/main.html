@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DistEdu | Вхід</title>
+
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/vendor/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: url(/images/bg-kma.jpg) no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            padding: 50px 60px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Логотип */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo {
+            max-width: 450px;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Поля вводу */
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 18px 20px 18px 60px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s;
+            background: #ffffff;
+        }
+
+        .input-field:focus {
+            border-color: #0044cc;
+            box-shadow: 0 0 0 3px rgba(0, 68, 204, 0.1);
+        }
+
+        .input-field::placeholder {
+            color: #999;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #666;
+        }
+
+        /* Кнопка-глазик у полі пароля */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: #0044cc;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .password-toggle-btn:hover {
+            background: rgba(0, 68, 204, 0.1);
+        }
+
+        /* Лінк "Забули пароль?" */
+        .forgot-link {
+            text-align: center;
+            margin: 20px 0 30px;
+        }
+
+        .forgot-link a {
+            color: #666;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .forgot-link a:hover {
+            color: #0044cc;
+            text-decoration: underline;
+        }
+
+        /* Кнопка входу */
+        .btn-login {
+            width: 100%;
+            padding: 18px;
+            background: #0044cc;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .btn-login:hover {
+            background: #0033aa;
+        }
+
+        /* Розділювач */
+        .text-login-separator {
+            text-align: center;
+            margin: 30px 0;
+            color: #666;
+            font-size: 15px;
+        }
+
+        /* Кнопка Office 365 */
+        .btn-office365 {
+            width: 100%;
+            padding: 16px;
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .btn-office365:hover {
+            background: #ebebeb;
+            border-color: #ccc;
+            text-decoration: none;
+        }
+
+        .btn-office365 img {
+            height: 24px;
+            width: 24px;
+        }
+
+        /* Служба підтримки */
+        .support-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .support-link a {
+            color: #0044cc;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .support-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alert-danger {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .alert-success {
+            background: #efe;
+            color: #3a3;
+            border: 1px solid #cfc;
+        }
+
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 40px 30px;
+            }
+
+            .logo {
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div class="logo-section">
+        <img th:src="@{/images/logo-distedu.png}" alt="DistEdu" class="logo">
+    </div>
+
+    <div th:if="${param.error}" class="alert alert-danger">
+        This service is not working now!
+    </div>
+    <div th:if="${param.logout}" class="alert alert-success">
+        Ви вийшли із системи
+    </div>
+
+    <form th:action="@{/login/index.php}" method="post" th:object="${user}">
+        <!-- Логін -->
+        <div class="input-wrapper">
+            <i class="bi bi-person input-icon"></i>
+            <input type="text" class="input-field" id="username" name="username"
+                   placeholder="Ім'я входу" th:value="${user.username}" required autofocus>
+        </div>
+
+        <!-- Пароль з глазиком -->
+        <div class="input-wrapper password-wrapper">
+            <i class="bi bi-key input-icon"></i>
+            <input type="password" class="input-field" id="password" name="password"
+                   placeholder="Пароль" th:value="${user.password}" required>
+            <button type="button" class="password-toggle-btn" id="togglePassword">
+                <i class="bi bi-eye"></i>
+            </button>
+        </div>
+
+        <div class="forgot-link">
+            <a th:href="@{/forgot-password}">Забули ім'я або пароль?</a>
+        </div>
+
+        <button type="submit" class="btn btn-login">Увійти</button>
+    </form>
+
+    <div class="text-login-separator">Увійдіть, використовуючи свій обліковий запис на:</div>
+
+    <a th:href="@{/oauth2/authorization/office365}" class="btn btn-office365">
+        <img th:src="@{/images/office365.png}" alt="Office 365"> Вхід через Office 365
+    </a>
+
+    <div class="support-link">
+        <a th:href="@{/support}">Служба підтримки</a>
+    </div>
+</div>
+
+<!-- Скрипт для переключення виду пароля -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            const icon = this.querySelector('i');
+            icon.classList.toggle('bi-eye');
+            icon.classList.toggle('bi-eye-slash');
+        });
+    });
+</script>
+
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
