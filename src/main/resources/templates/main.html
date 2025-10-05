@@ -225,6 +225,73 @@
             border: 1px solid #cfc;
         }
 
+        /* Language Switcher - Fixed to bottom right */
+        .language-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .language-btn {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 6px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s;
+        }
+
+        .language-btn:hover {
+            border-color: #999;
+            background: #f9f9f9;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            margin-bottom: 8px;
+            background: #1a1a1a;
+            border: none;
+            border-radius: 6px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            display: none;
+            min-width: 150px;
+            z-index: 1000;
+        }
+
+        .language-dropdown.show {
+            display: block;
+        }
+
+        .language-dropdown a {
+            display: block;
+            padding: 8px 12px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: background 0.2s;
+            font-size: 12px;
+        }
+
+        .language-dropdown a:hover {
+            background: #333333;
+        }
+
+        .language-dropdown a:first-child {
+            border-radius: 6px 6px 0 0;
+        }
+
+        .language-dropdown a:last-child {
+            border-radius: 0 0 6px 6px;
+        }
+
         @media (max-width: 768px) {
             .login-card {
                 padding: 40px 30px;
@@ -239,14 +306,14 @@
 <body>
 
 <div class="login-card">
+
     <div class="logo-section">
         <img th:src="@{/images/logo-distedu.png}" alt="DistEdu" class="logo">
     </div>
 
-    <!-- TODO
     <div th:if="${param.error}" class="alert alert-danger">
         This service is not working now!
-    </div> -->
+    </div>
     <div th:if="${param.logout}" class="alert alert-success">
         Ви вийшли із системи
     </div>
@@ -283,7 +350,17 @@
     </a>
 
     <div class="support-link">
-        <a th:href="@{/support}">Служба підтримки</a>
+        <a href="https://support.ukma.edu.ua/uk/" target="_blank">Служба підтримки</a>
+    </div>
+</div>
+
+<div class="language-switcher">
+    <button class="language-btn" id="languageBtn">
+        <span style="font-size: 16px;">⚐</span> UK
+    </button>
+    <div class="language-dropdown" id="languageDropdown">
+        <a href="#" onclick="changeLanguage('uk'); return false;">Українська (uk)</a>
+        <a href="#" onclick="changeLanguage('en'); return false;">English (en)</a>
     </div>
 </div>
 
@@ -301,7 +378,39 @@
             icon.classList.toggle('bi-eye');
             icon.classList.toggle('bi-eye-slash');
         });
+
+        // Language switcher functionality
+        const languageBtn = document.getElementById('languageBtn');
+        const languageDropdown = document.getElementById('languageDropdown');
+        
+        // Toggle dropdown when button is clicked
+        languageBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+                languageDropdown.classList.remove('show');
+            }
+        });
     });
+
+    // Change language function
+    function changeLanguage(lang) {
+        // Store selected language
+        sessionStorage.setItem('selectedLanguage', lang);
+        
+        // Update button text with flag
+        const flagIcon = '<span style="font-size: 16px;">�</span>';
+        document.getElementById('languageBtn').innerHTML = 
+            flagIcon + ' ' + lang.toUpperCase();
+        
+        // Close dropdown
+        document.getElementById('languageDropdown').classList.remove('show');
+        
+    }
 </script>
 
 <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
